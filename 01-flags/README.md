@@ -1,4 +1,4 @@
-# elm-setup-series
+# 01-flags
 
 ## How to install
 

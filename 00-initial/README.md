@@ -1,4 +1,4 @@
-# elm-setup-series
+# 00-initial
 
 ## How to install
 
