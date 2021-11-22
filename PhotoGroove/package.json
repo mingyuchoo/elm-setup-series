@@ -1,0 +1,27 @@
+{
+  "name": "photogroove",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+      "repl": "elm repl", 
+      "format": "elm-format . --yes",
+      "reactor": "elm reactor", 
+      "make": "elm make  src/PhotoGroove.elm --output=public/elm.js",
+      "live": "elm-live src/PhotoGroove.elm",
+      "http-server": "http-server",
+      "json-server": "json-server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "elm": "^0.19.1-5"
+  },
+  "devDependencies": {
+    "elm-format": "^0.8.5",
+    "elm-live": "^4.0.2",
+    "http-server": "^14.0.0",
+    "json-server": "^0.17.0"
+  }
+}
