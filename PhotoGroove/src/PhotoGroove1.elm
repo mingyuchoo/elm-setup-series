@@ -1,4 +1,4 @@
-module PhotoGroove exposing (..)
+module PhotoGroove1 exposing (..)
 
 import Array exposing (Array)
 import Browser

@@ -7,8 +7,8 @@
       "repl": "elm repl", 
       "format": "elm-format . --yes",
       "reactor": "elm reactor", 
-      "make": "elm make  src/PhotoGroove.elm --output=public/elm.js",
-      "live": "elm-live src/PhotoGroove.elm",
+      "make": "elm make  src/*.elm --output=public/elm.js",
+      "live": "elm-live src/*.elm",
       "http-server": "http-server",
       "json-server": "json-server"
   },

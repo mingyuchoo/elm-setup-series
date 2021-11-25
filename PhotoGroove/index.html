@@ -1,3 +1,17 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PhotoGroove1</title>
+  <style>body { padding: 0; margin: 0; }</style>
+</head>
+
+<body>
+
+<pre id="elm"></pre>
+
+<script>
+try {
 (function(scope){
 'use strict';
 
@@ -5765,3 +5779,21 @@ var $author$project$PhotoGroove1$main = $elm$browser$Browser$element(
 	{init: $author$project$PhotoGroove1$init, subscriptions: $author$project$PhotoGroove1$subscriptions, update: $author$project$PhotoGroove1$update, view: $author$project$PhotoGroove1$view});
 _Platform_export({'PhotoGroove1':{'init':$author$project$PhotoGroove1$main(
 	$elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}});}(this));
+
+  var app = Elm.PhotoGroove1.init({ node: document.getElementById("elm") });
+}
+catch (e)
+{
+  // display initialization errors (e.g. bad flags, infinite recursion)
+  var header = document.createElement("h1");
+  header.style.fontFamily = "monospace";
+  header.innerText = "Initialization Error";
+  var pre = document.getElementById("elm");
+  document.body.insertBefore(header, pre);
+  pre.innerText = e;
+  throw e;
+}
+</script>
+
+</body>
+</html>
