@@ -7,9 +7,10 @@
       "repl": "elm repl", 
       "format": "elm-format . --yes",
       "reactor": "elm reactor", 
-      "make" : "npm run -s make-elm1 && npm run -s make-elm2",
+      "make" : "npm run -s make-elm1 && npm run -s make-elm2 && npm run -s make-elm3",
       "make-elm1": "elm make src/PhotoGroove1.elm --output=public/elm1.js",
       "make-elm2": "elm make src/PhotoGroove2.elm --output=public/elm2.js",
+      "make-elm3": "elm make src/PhotoGroove3.elm --output=public/elm3.js",
       "live": "elm-live src/*.elm",
       "http-server": "http-server",
       "json-server": "json-server"
