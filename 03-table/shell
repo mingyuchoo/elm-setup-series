@@ -1,0 +1,59 @@
+#! /bin/bash
+
+echo "-------------------------------------------------------"
+echo "Please select a number of program what you want to run."
+echo "    1) elm repl"
+echo "    2) elm-format"
+echo "    3) elm reactor"
+echo "    4) elm make"
+echo "    5) elm-live"
+echo "    6) json-server"
+echo "    q) quit this program"
+echo "-------------------------------------------------------"
+
+while read line
+do
+    case $line
+    in
+        1)
+            echo "elm repl"
+            elm repl
+            ;;
+        2)
+            echo "elm-format"
+            elm-format . --yes
+            ;;
+        3)
+            echo "elm reactor"
+            elm reactor
+            ;;
+        4)
+            echo "elm make"
+            elm make src/Main.elm --output=public/elm.js
+            ;;
+        5)
+            echo "elm-live"
+            elm-live
+            ;;
+        6)
+            echo "json-server"
+            npm run -s server
+            ;;
+        [Qq]*)
+            echo "Quit this program"
+            break
+            ;;
+    esac
+
+    echo "-------------------------------------------------------"
+    echo "Please select a number of program what you want to run."
+    echo "    1) elm repl"
+    echo "    2) elm-format"
+    echo "    3) elm reactor"
+    echo "    4) elm make"
+    echo "    5) elm-live"
+    echo "    q) quit this program"
+    echo "-------------------------------------------------------"
+
+done < ${1:-/dev/stdin}
+

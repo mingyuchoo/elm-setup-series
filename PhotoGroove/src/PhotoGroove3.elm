@@ -35,6 +35,12 @@ type alias Photo =
     , title : String
     }
 
+type Msg
+    = ClickedPhoto String
+    | ClickedSize Size
+    | ClickedSurpriseMe
+    | GotRandomPhoto Photo
+    | GotPhotos (Result Http.Error (List Photo))
 
 photoDecoder : Decoder Photo
 photoDecoder =
@@ -42,6 +48,14 @@ photoDecoder =
         |> required "url" string
         |> required "size" int
         |> optional "title" string "(untitled)"
+
+
+initialCmd : Cmd Msg
+initialCmd =
+    Http.get
+        { url = "http://elm-in-action.com/photos/list.json"
+        , expect = Http.expectJson GotPhotos (list photoDecoder)
+        }
 
 
 type Status
@@ -78,14 +92,6 @@ initialModel =
 
 
 ---- UPDATE ----
-
-
-type Msg
-    = ClickedPhoto String
-    | ClickedSize Size
-    | ClickedSurpriseMe
-    | GotRandomPhoto Photo
-    | GotPhotos (Result Http.Error (List Photo))
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -130,14 +136,6 @@ update msg model =
 
 
 ---- INIT ----
-
-
-initialCmd : Cmd Msg
-initialCmd =
-    Http.get
-        { url = "http://elm-in-action.com/photos/list.json"
-        , expect = Http.expectJson GotPhotos (list photoDecoder)
-        }
 
 
 init : flags -> ( Model, Cmd Msg )
