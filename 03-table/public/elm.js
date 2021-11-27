@@ -6110,10 +6110,11 @@ var $elm$http$Http$get = function (r) {
 		{body: $elm$http$Http$emptyBody, expect: r.expect, headers: _List_Nil, method: 'GET', timeout: $elm$core$Maybe$Nothing, tracker: $elm$core$Maybe$Nothing, url: r.url});
 };
 var $elm$json$Json$Decode$list = _Json_decodeList;
-var $author$project$Types$Post = F3(
-	function (id, title, author) {
-		return {author: author, id: id, title: title};
+var $author$project$Types$Post = F4(
+	function (id, title, author, published) {
+		return {author: author, id: id, published: published, title: title};
 	});
+var $elm$json$Json$Decode$bool = _Json_decodeBool;
 var $elm$json$Json$Decode$int = _Json_decodeInt;
 var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom = $elm$json$Json$Decode$map2($elm$core$Basics$apR);
 var $elm$json$Json$Decode$field = _Json_decodeField;
@@ -6127,17 +6128,21 @@ var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required = F3(
 var $elm$json$Json$Decode$string = _Json_decodeString;
 var $author$project$Types$postDecoder = A3(
 	$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-	'author',
-	$elm$json$Json$Decode$string,
+	'published',
+	$elm$json$Json$Decode$bool,
 	A3(
 		$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-		'title',
+		'author',
 		$elm$json$Json$Decode$string,
 		A3(
 			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-			'id',
-			$elm$json$Json$Decode$int,
-			$elm$json$Json$Decode$succeed($author$project$Types$Post))));
+			'title',
+			$elm$json$Json$Decode$string,
+			A3(
+				$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+				'id',
+				$elm$json$Json$Decode$int,
+				$elm$json$Json$Decode$succeed($author$project$Types$Post)))));
 var $author$project$Types$server = 'http://localhost:3000/posts/';
 var $author$project$Types$initialCmd = $elm$http$Http$get(
 	{
@@ -6148,7 +6153,7 @@ var $author$project$Types$initialCmd = $elm$http$Http$get(
 		url: $author$project$Types$server
 	});
 var $author$project$Types$Loading = {$: 'Loading'};
-var $author$project$Types$initialModel = $author$project$Types$Loading;
+var $author$project$Types$initialModel = {counter: 0, status: $author$project$Types$Loading};
 var $author$project$Main$init = function (_v0) {
 	return _Utils_Tuple2($author$project$Types$initialModel, $author$project$Types$initialCmd);
 };
@@ -6161,23 +6166,99 @@ var $author$project$Types$Failed = {$: 'Failed'};
 var $author$project$Types$Loaded = function (a) {
 	return {$: 'Loaded', a: a};
 };
+var $elm$core$Debug$log = _Debug_log;
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Main$update = F2(
 	function (msg, model) {
-		if (msg.a.$ === 'Err') {
-			var httpError = msg.a.a;
-			return _Utils_Tuple2($author$project$Types$Failed, $elm$core$Platform$Cmd$none);
+		if (msg.$ === 'GotPosts') {
+			if (msg.a.$ === 'Err') {
+				var httpError = msg.a.a;
+				var _v1 = A2($elm$core$Debug$log, 'Error', msg);
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{status: $author$project$Types$Failed}),
+					$elm$core$Platform$Cmd$none);
+			} else {
+				var posts = msg.a.a;
+				var _v2 = A2($elm$core$Debug$log, 'Ok', msg);
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							status: $author$project$Types$Loaded(posts)
+						}),
+					$elm$core$Platform$Cmd$none);
+			}
 		} else {
-			var posts = msg.a.a;
+			var num = msg.a;
+			var _v3 = A2($elm$core$Debug$log, 'Button Clicked', model.counter);
 			return _Utils_Tuple2(
-				$author$project$Types$Loaded(posts),
+				_Utils_update(
+					model,
+					{counter: model.counter + num}),
 				$elm$core$Platform$Cmd$none);
 		}
 	});
 var $elm$html$Html$div = _VirtualDom_node('div');
+var $author$project$Types$Increase = function (a) {
+	return {$: 'Increase', a: a};
+};
+var $elm$html$Html$button = _VirtualDom_node('button');
+var $elm$virtual_dom$VirtualDom$Normal = function (a) {
+	return {$: 'Normal', a: a};
+};
+var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
+var $elm$html$Html$Events$on = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$Normal(decoder));
+	});
+var $elm$html$Html$Events$onClick = function (msg) {
+	return A2(
+		$elm$html$Html$Events$on,
+		'click',
+		$elm$json$Json$Decode$succeed(msg));
+};
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
+var $author$project$View$viewButton = A2(
+	$elm$html$Html$div,
+	_List_Nil,
+	_List_fromArray(
+		[
+			A2(
+			$elm$html$Html$button,
+			_List_fromArray(
+				[
+					$elm$html$Html$Events$onClick(
+					$author$project$Types$Increase(1))
+				]),
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Click!')
+				]))
+		]));
+var $elm$html$Html$p = _VirtualDom_node('p');
+var $author$project$View$viewCounter = function (counter) {
+	return A2(
+		$elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$p,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text(
+						$elm$core$String$fromInt(counter))
+					]))
+			]));
+};
 var $author$project$View$viewFailed = A2(
 	$elm$html$Html$div,
 	_List_Nil,
@@ -6187,8 +6268,27 @@ var $author$project$View$viewFailed = A2(
 		]));
 var $elm$html$Html$table = _VirtualDom_node('table');
 var $elm$html$Html$tbody = _VirtualDom_node('tbody');
+var $elm$json$Json$Encode$bool = _Json_wrap;
+var $elm$html$Html$Attributes$boolProperty = F2(
+	function (key, bool) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			$elm$json$Json$Encode$bool(bool));
+	});
+var $elm$html$Html$Attributes$checked = $elm$html$Html$Attributes$boolProperty('checked');
+var $elm$html$Html$input = _VirtualDom_node('input');
 var $elm$html$Html$td = _VirtualDom_node('td');
 var $elm$html$Html$tr = _VirtualDom_node('tr');
+var $elm$json$Json$Encode$string = _Json_wrap;
+var $elm$html$Html$Attributes$stringProperty = F2(
+	function (key, string) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			$elm$json$Json$Encode$string(string));
+	});
+var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
 var $author$project$View$viewTableData = function (post) {
 	return A2(
 		$elm$html$Html$tr,
@@ -6216,6 +6316,20 @@ var $author$project$View$viewTableData = function (post) {
 				_List_fromArray(
 					[
 						$elm$html$Html$text(post.author)
+					])),
+				A2(
+				$elm$html$Html$td,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$input,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$type_('checkbox'),
+								$elm$html$Html$Attributes$checked(post.published)
+							]),
+						_List_Nil)
 					]))
 			]));
 };
@@ -6257,6 +6371,13 @@ var $author$project$View$viewTableHeader = A2(
 					_List_fromArray(
 						[
 							$elm$html$Html$text('Author')
+						])),
+					A2(
+					$elm$html$Html$th,
+					_List_Nil,
+					_List_fromArray(
+						[
+							$elm$html$Html$text('Published')
 						]))
 				]))
 		]));
@@ -6287,15 +6408,26 @@ var $author$project$View$viewLoading = A2(
 			$elm$html$Html$text('Loading...')
 		]));
 var $author$project$View$view = function (model) {
-	switch (model.$) {
-		case 'Failed':
-			return $author$project$View$viewFailed;
-		case 'Loading':
-			return $author$project$View$viewLoading;
-		default:
-			var posts = model.a;
-			return $author$project$View$viewLoaded(posts);
-	}
+	return A2(
+		$elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				$author$project$View$viewButton,
+				$author$project$View$viewCounter(model.counter),
+				function () {
+				var _v0 = model.status;
+				switch (_v0.$) {
+					case 'Failed':
+						return $author$project$View$viewFailed;
+					case 'Loading':
+						return $author$project$View$viewLoading;
+					default:
+						var posts = _v0.a;
+						return $author$project$View$viewLoaded(posts);
+				}
+			}()
+			]));
 };
 var $author$project$Main$main = $elm$browser$Browser$element(
 	{init: $author$project$Main$init, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$View$view});

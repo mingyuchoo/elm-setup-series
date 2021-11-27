@@ -1,4 +1,4 @@
-module Types exposing (Model(..), Msg(..), Post, initialCmd, initialModel)
+module Types exposing (Model, Msg(..), Post, Status(..), initialCmd, initialModel)
 
 import Http
 import Json.Decode exposing (..)
@@ -13,6 +13,7 @@ type alias Post =
     { id : Int
     , title : String
     , author : String
+    , published : Bool
     }
 
 
@@ -22,17 +23,26 @@ postDecoder =
         |> required "id" int
         |> required "title" string
         |> required "author" string
+        |> required "published" bool
 
 
-type Model
+type Status
     = Failed
     | Loading
     | Loaded (List Post)
 
 
+type alias Model =
+    { status : Status
+    , counter : Int
+    }
+
+
 initialModel : Model
 initialModel =
-    Loading
+    { status = Loading
+    , counter = 0
+    }
 
 
 
@@ -41,6 +51,7 @@ initialModel =
 
 type Msg
     = GotPosts (Result Http.Error (List Post))
+    | Increase Int
 
 
 

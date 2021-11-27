@@ -1,21 +1,47 @@
 module View exposing (view)
 
 import Html exposing (..)
-import Html.Attributes exposing (class, classList, id, name, src, title, type_)
-import Types exposing (Model(..), Msg(..), Post)
+import Html.Attributes exposing (checked, class, classList, id, name, src, title, type_)
+import Html.Events exposing (onClick)
+import Types exposing (Model, Msg(..), Post, Status(..))
 
 
 view : Model -> Html Msg
 view model =
-    case model of
-        Failed ->
-            viewFailed
+    div
+        []
+        [ viewButton
+        , viewCounter model.counter
+        , case model.status of
+            Failed ->
+                viewFailed
 
-        Loading ->
-            viewLoading
+            Loading ->
+                viewLoading
 
-        Loaded posts ->
-            viewLoaded posts
+            Loaded posts ->
+                viewLoaded posts
+        ]
+
+
+viewButton : Html Msg
+viewButton =
+    div
+        []
+        [ button
+            [ onClick (Increase 1) ]
+            [ text "Click!" ]
+        ]
+
+
+viewCounter : Int -> Html Msg
+viewCounter counter =
+    div
+        []
+        [ p
+            []
+            [ text (String.fromInt counter) ]
+        ]
 
 
 viewFailed : Html Msg
@@ -34,7 +60,8 @@ viewLoading =
 
 viewLoaded : List Post -> Html Msg
 viewLoaded posts =
-    div []
+    div
+        []
         [ viewTable posts ]
 
 
@@ -53,12 +80,18 @@ viewTableHeader =
         []
         [ tr
             []
-            [ th []
+            [ th
+                []
                 [ text "ID" ]
-            , th []
+            , th
+                []
                 [ text "Title" ]
-            , th []
+            , th
+                []
                 [ text "Author" ]
+            , th
+                []
+                [ text "Published" ]
             ]
         ]
 
@@ -72,11 +105,23 @@ viewTableBody posts =
 
 viewTableData : Post -> Html Msg
 viewTableData post =
-    tr []
-        [ td []
+    tr
+        []
+        [ td
+            []
             [ text <| String.fromInt post.id ]
-        , td []
+        , td
+            []
             [ text post.title ]
-        , td []
+        , td
+            []
             [ text post.author ]
+        , td
+            []
+            [ input
+                [ type_ "checkbox"
+                , checked post.published
+                ]
+                []
+            ]
         ]

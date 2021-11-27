@@ -3,17 +3,20 @@
     {
       "id": 1,
       "title": "json-server",
-      "author": "typicode"
+      "author": "typicode",
+      "published": false
     },
     {
       "id": 2,
       "title": "http-server",
-      "author": "http-party"
+      "author": "http-party",
+      "published": true
     },
     {
       "id": 3,
       "title": "graphql-server",
-      "author": "hasura"
+      "author": "hasura",
+      "published": true
     }
   ],
   "comments": [

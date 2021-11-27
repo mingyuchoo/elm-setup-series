@@ -1,7 +1,7 @@
 module Main exposing (..)
 
 import Browser
-import Types exposing (Model(..), Msg(..), initialCmd, initialModel)
+import Types exposing (Model, Msg(..), Status(..), initialCmd, initialModel)
 import View exposing (view)
 
 
@@ -22,10 +22,33 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GotPosts (Err httpError) ->
-            ( Failed, Cmd.none )
+            let
+                _ =
+                    Debug.log "Error" msg
+            in
+            ( { model
+                | status = Failed
+              }
+            , Cmd.none
+            )
 
         GotPosts (Ok posts) ->
-            ( Loaded posts, Cmd.none )
+            let
+                _ =
+                    Debug.log "Ok" msg
+            in
+            ( { model
+                | status = Loaded posts
+              }
+            , Cmd.none
+            )
+
+        Increase num ->
+            let
+                _ =
+                    Debug.log "Button Clicked" model.counter
+            in
+            ( { model | counter = model.counter + num }, Cmd.none )
 
 
 
