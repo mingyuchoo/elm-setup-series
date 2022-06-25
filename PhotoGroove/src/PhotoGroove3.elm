@@ -35,12 +35,14 @@ type alias Photo =
     , title : String
     }
 
+
 type Msg
     = ClickedPhoto String
     | ClickedSize Size
     | ClickedSurpriseMe
     | GotRandomPhoto Photo
     | GotPhotos (Result Http.Error (List Photo))
+
 
 photoDecoder : Decoder Photo
 photoDecoder =

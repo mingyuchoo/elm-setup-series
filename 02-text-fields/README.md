@@ -43,6 +43,7 @@ open `index.html` file with a `web browser`.
 
 ## References
 
+- <https://guide.elm-lang.org/architecture/text_fields.html>
 - <https://guide.elm-lang.org/>
 
 

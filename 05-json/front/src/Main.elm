@@ -10,7 +10,22 @@ import Json.Decode.Pipeline exposing (required)
 import RemoteData exposing (RemoteData, WebData)
 
 
--- Model
+
+-- MAIN
+
+
+main : Program () Model Msg
+main =
+    Browser.element
+        { init = init
+        , view = view
+        , update = update
+        , subscriptions = subscriptions
+        }
+
+
+
+-- MODEL
 
 
 type alias Post =
@@ -35,7 +50,7 @@ init _ =
 
 
 
--- Msg
+-- MSG
 
 
 type Msg
@@ -44,7 +59,72 @@ type Msg
 
 
 
--- View
+-- UPDATE
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        FetchPosts ->
+            ( { model | posts = RemoteData.Loading }
+            , fetchPosts
+            )
+
+        PostsReceived response ->
+            ( { model | posts = response }
+            , Cmd.none
+            )
+
+
+postDecoder : Decoder Post
+postDecoder =
+    Decode.succeed Post
+        |> required "id" int
+        |> required "title" string
+        |> required "authorName" string
+        |> required "authorUrl" string
+
+
+fetchPosts : Cmd Msg
+fetchPosts =
+    Http.get
+        { url = "http://localhost:8081/posts"
+        , expect =
+            list postDecoder
+                |> Http.expectJson (RemoteData.fromResult >> PostsReceived)
+        }
+
+
+buildErrorMessage : Http.Error -> String
+buildErrorMessage httpError =
+    case httpError of
+        Http.BadUrl message ->
+            message
+
+        Http.Timeout ->
+            "Server is taking to o long to respond. Please try again later."
+
+        Http.NetworkError ->
+            "Unable to reach server."
+
+        Http.BadStatus statusCode ->
+            "Request failed with status code: " ++ String.fromInt statusCode
+
+        Http.BadBody message ->
+            message
+
+
+
+-- SUBSCRIPTIONS
+
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    Sub.none
+
+
+
+-- VIEW
 
 
 view : Model -> Html Msg
@@ -63,7 +143,7 @@ viewPostsOrError model =
     case model.posts of
         RemoteData.NotAsked ->
             text ""
-            
+
         RemoteData.Loading ->
             h3
                 []
@@ -74,8 +154,6 @@ viewPostsOrError model =
 
         RemoteData.Failure httpError ->
             viewError (buildErrorMessage httpError)
-
-
 
 
 viewError : String -> Html Msg
@@ -139,81 +217,3 @@ viewPost post =
                 [ text post.authorName ]
             ]
         ]
-
-
-
--- Update
-
-
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    case msg of
-        FetchPosts ->
-            ( { model | posts = RemoteData.Loading }
-            , fetchPosts
-            )
-        
-        PostsReceived response ->
-            ( { model | posts = response }
-            , Cmd.none
-            )
-
-postDecoder : Decoder Post
-postDecoder =
-    Decode.succeed Post
-        |> required "id" int
-        |> required "title" string
-        |> required "authorName" string
-        |> required "authorUrl" string
-
-
-fetchPosts : Cmd Msg
-fetchPosts =
-    Http.get
-        { url = "http://localhost:8081/posts"
-        , expect = 
-            list postDecoder
-                |> Http.expectJson (RemoteData.fromResult >> PostsReceived)
-        }
-
-
-buildErrorMessage : Http.Error -> String
-buildErrorMessage httpError =
-    case httpError of
-        Http.BadUrl message ->
-            message
-
-        Http.Timeout ->
-            "Server is taking to o long to respond. Please try again later."
-
-        Http.NetworkError ->
-            "Unable to reach server."
-
-        Http.BadStatus statusCode ->
-            "Request failed with status code: " ++ String.fromInt statusCode
-
-        Http.BadBody message ->
-            message
-
-
-
--- Subscriptions
-
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Sub.none
-
-
-
--- Main
-
-
-main : Program () Model Msg
-main =
-    Browser.element
-        { init = init
-        , view = view
-        , update = update
-        , subscriptions = subscriptions
-        }
