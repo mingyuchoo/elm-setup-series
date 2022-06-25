@@ -10,7 +10,7 @@ module Main exposing (..)
 
 --------------------------------------------------------------------------------
 import Browser
-import Html exposing (Html, button, div, text)
+import Html exposing (Html, button, div, text, p)
 import Html.Events exposing (onClick)
 
 --------------------------------------------------------------------------------
@@ -43,8 +43,8 @@ update msg model = case msg of
 -- VIEW
 
 view : Model -> Html Msg
-view model = div [] [ text   "Hello World!"
-                    , button [ onClick Decrement ] [ text "-" ]
+view model = div [] [ div    [] [ text   "Hello World!" ]
                     , div    [] [ text (String.fromInt model) ]
+                    , button [ onClick Decrement ] [ text "-" ]
                     , button [ onClick Increment ] [ text "+" ]
                     ]

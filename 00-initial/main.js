@@ -5197,7 +5197,13 @@ var $author$project$Main$view = function (model) {
 		_List_Nil,
 		_List_fromArray(
 			[
-				$elm$html$Html$text('Hello World!'),
+				A2(
+				$elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Hello World!')
+					])),
 				A2(
 				$elm$html$Html$button,
 				_List_fromArray(
