@@ -2,13 +2,12 @@
 
 echo "-------------------------------------------------------"
 echo "Please select a number of program what you want to run."
-echo "    1) elm repl"
-echo "    2) elm-format"
-echo "    3) elm reactor"
-echo "    4) elm make"
+echo "    1) Install package"
+echo "    2) Elm repl"
+echo "    3) elm-format"
+echo "    4) Elm make"
 echo "    5) elm-live"
-echo "    6) json-server"
-echo "    q) quit this program"
+echo "    q) Quit this program"
 echo "-------------------------------------------------------"
 
 while read line
@@ -16,43 +15,44 @@ do
     case $line
     in
         1)
-            echo "elm repl"
-            elm repl
+            echo "Install package"
+            elm install elm/http
+            elm install elm/json
+            elm install elm/random
+            elm install krisajenkins/remotedata
+            elm install NoRedInk/elm-json-decode-pipeline
             ;;
         2)
-            echo "elm-format"
-            elm-format . --yes
+            echo "Elm repl"
+            elm repl
             ;;
         3)
-            echo "elm reactor"
-            elm reactor
+            echo "elm-format"
+            elm-format ./src --yes
             ;;
         4)
-            echo "elm make"
-            elm make src/Main.elm --output=public/elm.js
+            echo "Elm make"
+            elm make src/Main.elm --optimize --output=main.js
             ;;
         5)
             echo "elm-live"
-            elm-live
-            ;;
-        6)
-            echo "json-server"
-            npm run -s server
+            elm-live ./src/Main.elm
             ;;
         [Qq]*)
             echo "Quit this program"
             break
             ;;
+
     esac
 
     echo "-------------------------------------------------------"
     echo "Please select a number of program what you want to run."
-    echo "    1) elm repl"
-    echo "    2) elm-format"
-    echo "    3) elm reactor"
-    echo "    4) elm make"
+    echo "    1) Install package"
+    echo "    2) Elm repl"
+    echo "    3) elm-format"
+    echo "    4) Elm make"
     echo "    5) elm-live"
-    echo "    q) quit this program"
+    echo "    q) Quit this program"
     echo "-------------------------------------------------------"
 
 done < ${1:-/dev/stdin}

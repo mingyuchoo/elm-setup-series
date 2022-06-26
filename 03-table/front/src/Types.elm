@@ -5,6 +5,29 @@ import Json.Decode exposing (..)
 import Json.Decode.Pipeline exposing (optional, required)
 
 
+---- CMD ----
+
+
+server : String
+server =
+    "http://localhost:3000/posts/"
+
+
+initialCmd : Cmd Msg
+initialCmd =
+    Http.get
+        { expect = Http.expectJson GotPosts (list postDecoder)
+        , url = server
+        }
+
+
+---- MSG ----
+
+
+type Msg
+    = GotPosts (Result Http.Error (List Post))
+    | Increase Int
+
 
 ---- MODEL ----
 
@@ -44,28 +67,3 @@ initialModel =
     , counter = 0
     }
 
-
-
----- MSG ----
-
-
-type Msg
-    = GotPosts (Result Http.Error (List Post))
-    | Increase Int
-
-
-
----- CMD ----
-
-
-server : String
-server =
-    "http://localhost:3000/posts/"
-
-
-initialCmd : Cmd Msg
-initialCmd =
-    Http.get
-        { expect = Http.expectJson GotPosts (list postDecoder)
-        , url = server
-        }

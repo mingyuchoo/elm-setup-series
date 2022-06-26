@@ -50,6 +50,13 @@ update msg model =
             in
             ( { model | counter = model.counter + num }, Cmd.none )
 
+        Checked num ->
+            let
+                _ =
+                    Debug.log "Checked " 1
+            in
+            ( model, Cmd.none )
+
 
 
 ---- SUBSCRIPTIONS ----

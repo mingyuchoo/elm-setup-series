@@ -5,6 +5,17 @@ import Types exposing (Model, Msg(..), Status(..), initialCmd, initialModel)
 import View exposing (view)
 
 
+---- MAIN ----
+
+
+main =
+    Browser.element
+        { init = init
+        , update = update
+        , subscriptions = subscriptions
+        , view = view
+        }
+
 
 ---- MODEL ----
 
@@ -50,12 +61,7 @@ update msg model =
             in
             ( { model | counter = model.counter + num }, Cmd.none )
 
-        Checked num ->
-            let
-                _ =
-                    Debug.log "Checked " 1
-            in
-            ( model, Cmd.none )
+
 
 ---- SUBSCRIPTIONS ----
 
@@ -63,16 +69,3 @@ update msg model =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.none
-
-
-
----- PROGRAM ----
-
-
-main =
-    Browser.element
-        { init = init
-        , update = update
-        , subscriptions = subscriptions
-        , view = view
-        }

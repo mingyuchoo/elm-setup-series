@@ -1,11 +1,10 @@
 {
-  "name": "app",
+  "name": "back",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "json-server --watch --delay 1000 server/db.json"
+    "start": "json-server --watch --delay 500 db.json"
   },
   "keywords": [],
   "author": "",
