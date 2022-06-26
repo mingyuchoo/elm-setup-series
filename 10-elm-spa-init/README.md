@@ -1,4 +1,5 @@
-# my new project
+# 10-elm-spa-init
+
 > 🌳  built with [elm-spa](https://elm-spa.dev)
 
 ## dependencies

@@ -17,10 +17,11 @@ import Html.Events exposing (onInput)
 
 
 main =
-    Browser.sandbox { init = init
-                    , update = update
-                    , view = view
-                    }
+    Browser.sandbox
+        { init = init
+        , update = update
+        , view = view
+        }
 
 
 
@@ -59,6 +60,6 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div []
-        [ div [] [input [ placeholder "Text to reverse", value model.content, onInput Change ] [] ]
+        [ div [] [ input [ placeholder "Text to reverse", value model.content, onInput Change ] [] ]
         , div [] [ text (String.reverse model.content) ]
         ]

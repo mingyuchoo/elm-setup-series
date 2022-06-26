@@ -1,4 +1,4 @@
-# 00-initial
+# 01-buttons
 
 ## How to install
 
@@ -40,9 +40,6 @@ elm make src/Main.elm --optimize --output=main.js
 
 open `index.html` file with a `web browser`.
 
-
 ## References
 
 - <https://guide.elm-lang.org/>
-
-

@@ -1,0 +1,53 @@
+html {
+    font-family: 'Fira Code';
+}
+button {
+    background-color: black;
+    color: white;
+    border: 2px solid black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    font-family: 'Fira Code';
+    font-weight: bold;
+    font-size: 16px;
+}
+button:hover {
+    background-color: white;
+    color: black;
+}
+button:active {
+    background-color: white;
+    color: black;
+}
+table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    min-width: 400px;
+}
+thead tr {
+    background-color: black;
+    color: #ffffff;
+    text-align: left;
+}
+th, td {
+    padding: 11px 15px;
+}
+tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+tr:last-of-type {
+    border-bottom: 2px solid black;
+}
+tbody tr.active-row {
+    font-weight: bold;
+    color: black;
+}

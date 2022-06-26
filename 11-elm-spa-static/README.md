@@ -1,4 +1,5 @@
-# my new project
+# 11-elm-spa-static
+
 > 🌳  built with [elm-spa](https://elm-spa.dev)
 
 ## dependencies
