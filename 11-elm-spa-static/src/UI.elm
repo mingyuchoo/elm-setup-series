@@ -11,11 +11,11 @@ layout children =
         viewLink label url =
             Html.a [ Attr.href url ] [ Html.text label ]
     in
-        [ Html.div [ Attr.class "container" ]
-            [ Html.header [ Attr.class "navbar" ]
-                  [ viewLink "Home" "/"
-                  , viewLink "Static" "/static"
-                  ]
-            , Html.main_ [] children
+    [ Html.div [ Attr.class "container" ]
+        [ Html.header [ Attr.class "navbar" ]
+            [ viewLink "Home" "/"
+            , viewLink "Static" "/static"
             ]
+        , Html.main_ [] children
         ]
+    ]

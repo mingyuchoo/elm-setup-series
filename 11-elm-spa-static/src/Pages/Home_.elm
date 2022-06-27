@@ -1,7 +1,7 @@
 module Pages.Home_ exposing (view)
 
-import UI
 import Html
+import UI
 import View exposing (View)
 
 
@@ -10,4 +10,3 @@ view =
     { title = "Homepage"
     , body = UI.layout [ Html.text "Hello, world!" ]
     }
-
