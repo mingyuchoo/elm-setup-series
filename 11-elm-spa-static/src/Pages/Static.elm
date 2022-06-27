@@ -8,13 +8,11 @@ import Shared
 import UI
 import View exposing (View)
 
-
 page : Shared.Model -> Request -> Page
 page shared req =
     Page.static
         { view = view
         }
-
 
 view : View msg
 view =

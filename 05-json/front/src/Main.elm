@@ -9,10 +9,7 @@ import Json.Decode as Decode exposing (Decoder, int, list, string)
 import Json.Decode.Pipeline exposing (required)
 import RemoteData exposing (RemoteData, WebData)
 
-
-
 -- MAIN
-
 
 main : Program () Model Msg
 main =
@@ -23,10 +20,7 @@ main =
         , subscriptions = subscriptions
         }
 
-
-
 -- MODEL
-
 
 type alias Post =
     { id : Int
@@ -35,11 +29,9 @@ type alias Post =
     , authorUrl : String
     }
 
-
 type alias Model =
     { posts : WebData (List Post)
     }
-
 
 init : () -> ( Model, Cmd Msg )
 init _ =
@@ -49,18 +41,13 @@ init _ =
     )
 
 
-
 -- MSG
-
 
 type Msg
     = FetchPosts
     | PostsReceived (WebData (List Post))
 
-
-
 -- UPDATE
-
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -75,7 +62,6 @@ update msg model =
             , Cmd.none
             )
 
-
 postDecoder : Decoder Post
 postDecoder =
     Decode.succeed Post
@@ -83,7 +69,6 @@ postDecoder =
         |> required "title" string
         |> required "authorName" string
         |> required "authorUrl" string
-
 
 fetchPosts : Cmd Msg
 fetchPosts =
@@ -93,7 +78,6 @@ fetchPosts =
             list postDecoder
                 |> Http.expectJson (RemoteData.fromResult >> PostsReceived)
         }
-
 
 buildErrorMessage : Http.Error -> String
 buildErrorMessage httpError =
@@ -117,23 +101,16 @@ buildErrorMessage httpError =
 
 -- SUBSCRIPTIONS
 
-
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.none
 
-
-
 -- VIEW
-
 
 view : Model -> Html Msg
 view model =
-    div
-        []
-        [ button
-            [ onClick FetchPosts ]
-            [ text "Refresh posts" ]
+    div []
+        [ button [ onClick FetchPosts ] [ text "Refresh posts" ]
         , viewPostsOrError model
         ]
 
@@ -145,9 +122,8 @@ viewPostsOrError model =
             text ""
 
         RemoteData.Loading ->
-            h3
-                []
-                [ text "Loading..." ]
+            h3 []
+               [ text "Loading..." ]
 
         RemoteData.Success posts ->
             viewPosts posts
@@ -164,9 +140,7 @@ viewError errorMessage =
     in
     div
         []
-        [ h3
-            []
-            [ text errorHeading ]
+        [ h3 [] [ text errorHeading ]
         , text ("Error: " ++ errorMessage)
         ]
 
@@ -175,12 +149,8 @@ viewPosts : List Post -> Html Msg
 viewPosts posts =
     div
         []
-        [ h3
-            []
-            [ text "Posts" ]
-        , table
-            []
-            ([ viewTableHeader ] ++ List.map viewPost posts)
+        [ h3 [] [ text "Posts" ]
+        , table [] ([ viewTableHeader ] ++ List.map viewPost posts)
         ]
 
 
@@ -188,15 +158,9 @@ viewTableHeader : Html Msg
 viewTableHeader =
     tr
         []
-        [ th
-            []
-            [ text "ID" ]
-        , th
-            []
-            [ text "Title" ]
-        , th
-            []
-            [ text "Author" ]
+        [ th [] [ text "ID" ]
+        , th [] [ text "Title" ]
+        , th [] [ text "Author" ]
         ]
 
 
@@ -204,16 +168,7 @@ viewPost : Post -> Html Msg
 viewPost post =
     tr
         []
-        [ td
-            []
-            [ text (String.fromInt post.id) ]
-        , td
-            []
-            [ text post.title ]
-        , td
-            []
-            [ a
-                [ href post.authorUrl ]
-                [ text post.authorName ]
-            ]
+        [ td [] [ text (String.fromInt post.id) ]
+        , td [] [ text post.title ]
+        , td [] [ a [ href post.authorUrl ] [ text post.authorName ] ]
         ]

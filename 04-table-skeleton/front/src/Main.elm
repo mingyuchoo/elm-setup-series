@@ -4,19 +4,24 @@ import Browser
 import Types exposing (Model, Msg(..), Status(..), initialCmd, initialModel)
 import View exposing (view)
 
+---- PROGRAM ----
 
+main : Program () Model Msg
+main =
+    Browser.element
+        { init = init
+        , update = update
+        , subscriptions = subscriptions
+        , view = view
+        }
 
 ---- MODEL ----
-
 
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( initialModel, initialCmd )
 
-
-
 ---- UPDATE ----
-
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -61,20 +66,7 @@ update msg model =
 
 ---- SUBSCRIPTIONS ----
 
-
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.none
 
-
-
----- PROGRAM ----
-
-
-main =
-    Browser.element
-        { init = init
-        , update = update
-        , subscriptions = subscriptions
-        , view = view
-        }

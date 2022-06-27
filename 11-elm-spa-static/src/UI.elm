@@ -3,7 +3,6 @@ module UI exposing (layout)
 import Html exposing (Html)
 import Html.Attributes as Attr
 
-
 layout : List (Html msg) -> List (Html msg)
 layout children =
     let

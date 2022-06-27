@@ -5,123 +5,72 @@ import Html.Attributes exposing (checked, class, classList, id, name, src, title
 import Html.Events exposing (onClick)
 import Types exposing (Model, Msg(..), Post, Status(..))
 
-
 view : Model -> Html Msg
 view model =
-    div
-        []
+    div []
         [ viewButton
         , viewCounter model.counter
         , case model.status of
-            Failed ->
-                viewFailed
-
-            Loading ->
-                viewLoading
-
-            Loaded posts ->
-                viewLoaded posts
+            Failed -> viewFailed
+            Loading -> viewLoading
+            Loaded posts -> viewLoaded posts
         ]
-
 
 viewButton : Html Msg
 viewButton =
-    div
-        []
-        [ button
-            [ onClick (Increase 1) ]
-            [ text "Click!" ]
+    div []
+        [ button [ onClick (Increase 1) ] [ text "Click!" ]
         ]
-
 
 viewCounter : Int -> Html Msg
 viewCounter counter =
-    div
-        []
-        [ p
-            []
-            [ text (String.fromInt counter) ]
+    div []
+        [ p [] [ text (String.fromInt counter) ]
         ]
-
 
 viewFailed : Html Msg
 viewFailed =
-    div
-        []
+    div []
         [ text "I was unable to load your book." ]
-
 
 viewLoading : Html Msg
 viewLoading =
-    div
-        []
+    div []
         [ text "Loading..." ]
-
 
 viewLoaded : List Post -> Html Msg
 viewLoaded posts =
-    div
-        []
+    div []
         [ viewTable posts ]
-
 
 viewTable : List Post -> Html Msg
 viewTable posts =
-    table
-        []
-        [ viewTableHeader
-        , viewTableBody posts
-        ]
-
+    table []
+          [ viewTableHeader
+          , viewTableBody posts
+          ]
 
 viewTableHeader : Html Msg
 viewTableHeader =
-    thead
-        []
-        [ tr
-            []
-            [ th
-                []
-                [ text "ID" ]
-            , th
-                []
-                [ text "Title" ]
-            , th
-                []
-                [ text "Author" ]
-            , th
-                []
-                [ text "Published" ]
-            ]
+    thead []
+        [ tr []
+             [ th [] [ text "ID" ]
+             , th [] [ text "Title" ]
+             , th [] [ text "Author" ]
+             , th [] [ text "Published" ]
+             ]
         ]
-
 
 viewTableBody : List Post -> Html Msg
 viewTableBody posts =
-    tbody
-        []
+    tbody []
         (List.map viewTableData posts)
-
 
 viewTableData : Post -> Html Msg
 viewTableData post =
-    tr
-        []
-        [ td
-            []
-            [ text <| String.fromInt post.id ]
-        , td
-            []
-            [ text post.title ]
-        , td
-            []
-            [ text post.author ]
-        , td
-            []
-            [ input
-                [ type_ "checkbox"
-                , checked post.published
-                ]
-                []
-            ]
-        ]
+    tr []
+       [ td [] [ text <| String.fromInt post.id ]
+       , td [] [ text post.title ]
+       , td [] [ text post.author ]
+       , td [] [ input [ type_ "checkbox" , checked post.published ] [] ]
+       ]

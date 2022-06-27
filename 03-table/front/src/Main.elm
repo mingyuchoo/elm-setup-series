@@ -4,10 +4,9 @@ import Browser
 import Types exposing (Model, Msg(..), Status(..), initialCmd, initialModel)
 import View exposing (view)
 
-
 ---- MAIN ----
 
-
+main : Program () Model Msg
 main =
     Browser.element
         { init = init
@@ -16,18 +15,13 @@ main =
         , view = view
         }
 
-
 ---- MODEL ----
-
 
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( initialModel, initialCmd )
 
-
-
 ---- UPDATE ----
-
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -61,10 +55,7 @@ update msg model =
             in
             ( { model | counter = model.counter + num }, Cmd.none )
 
-
-
 ---- SUBSCRIPTIONS ----
-
 
 subscriptions : Model -> Sub Msg
 subscriptions model =

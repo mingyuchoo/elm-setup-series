@@ -12,31 +12,23 @@ view model =
         [ viewButton
         , viewCounter model.counter
         , case model.status of
-            Failed ->
-                viewFailed
-
-            Loading ->
-                viewLoading
-
-            Loaded posts ->
-                viewLoaded posts
+            Failed -> viewFailed
+            Loading -> viewLoading
+            Loaded posts -> viewLoaded posts
         ]
 
 
 viewButton : Html Msg
 viewButton =
     div []
-        [ button
-            [ onClick (Increase 1) ]
-            [ text "Click!" ]
+        [ button [ onClick (Increase 1) ] [ text "Click!" ]
         ]
 
 
 viewCounter : Int -> Html Msg
 viewCounter counter =
     div []
-        [ p []
-            [ text (String.fromInt counter) ]
+        [ p [] [ text (String.fromInt counter) ]
         ]
 
 
@@ -55,9 +47,9 @@ viewLoading =
 viewTableLoading : Html Msg
 viewTableLoading =
     table []
-        [ viewTableHeader
-        , viewTableBodyLoading
-        ]
+          [ viewTableHeader
+          , viewTableBodyLoading
+          ]
 
 
 viewTableBodyLoading : Html Msg
@@ -69,15 +61,11 @@ viewTableBodyLoading =
 viewTableDataLoading : Html Msg
 viewTableDataLoading =
     tr []
-        [ td []
-            [ div [ class "skeleton", class "skeleton-text" ] [] ]
-        , td []
-            [ div [ class "skeleton", class "skeleton-text" ] [] ]
-        , td []
-            [ div [ class "skeleton", class "skeleton-text" ] [] ]
-        , td []
-            [ div [ class "skeleton", class "skeleton-text" ] [] ]
-        ]
+       [ td [] [ div [ class "skeleton", class "skeleton-text" ] [] ]
+       , td [] [ div [ class "skeleton", class "skeleton-text" ] [] ]
+       , td [] [ div [ class "skeleton", class "skeleton-text" ] [] ]
+       , td [] [ div [ class "skeleton", class "skeleton-text" ] [] ]
+       ]
 
 
 viewLoaded : List Post -> Html Msg
@@ -89,25 +77,21 @@ viewLoaded posts =
 viewTable : List Post -> Html Msg
 viewTable posts =
     table []
-        [ viewTableHeader
-        , viewTableBody posts
-        ]
+          [ viewTableHeader
+          , viewTableBody posts
+          ]
 
 
 viewTableHeader : Html Msg
 viewTableHeader =
     thead []
-        [ tr []
-            [ th []
-                [ text "ID" ]
-            , th []
-                [ text "Title" ]
-            , th []
-                [ text "Author" ]
-            , th []
-                [ text "Published" ]
-            ]
-        ]
+          [ tr []
+               [ th [] [ text "ID" ]
+               , th [] [ text "Title" ]
+               , th [] [ text "Author" ]
+               , th [] [ text "Published" ]
+               ]
+          ]
 
 
 viewTableBody : List Post -> Html Msg
@@ -119,14 +103,8 @@ viewTableBody posts =
 viewTableData : Post -> Html Msg
 viewTableData post =
     tr []
-        [ td [] [ text <| String.fromInt post.id ]
-        , td [] [ text post.title ]
-        , td [] [ text post.author ]
-        , td []
-            [ input
-                [ type_ "checkbox"
-                , checked post.published
-                ]
-                []
-            ]
-        ]
+       [ td [] [ text <| String.fromInt post.id ]
+       , td [] [ text post.title ]
+       , td [] [ text post.author ]
+       , td [] [ input [ type_ "checkbox" , checked post.published ] [] ]
+       ]

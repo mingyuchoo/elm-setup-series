@@ -4,33 +4,29 @@ import Http
 import Json.Decode exposing (..)
 import Json.Decode.Pipeline exposing (optional, required)
 
-
----- CMD ----
-
-
 server : String
 server =
     "http://localhost:3000/posts/"
 
+---- MODEL ---
 
-initialCmd : Cmd Msg
-initialCmd =
-    Http.get
-        { expect = Http.expectJson GotPosts (list postDecoder)
-        , url = server
-        }
+type Status
+    = Failed
+    | Loading
+    | Loaded (List Post)
 
+type alias Model =
+    { status : Status
+    , counter : Int
+    }
 
----- MSG ----
+initialModel : Model
+initialModel =
+    { status = Loading
+    , counter = 0
+    }
 
-
-type Msg
-    = GotPosts (Result Http.Error (List Post))
-    | Increase Int
-
-
----- MODEL ----
-
+---- COMMAND ----
 
 type alias Post =
     { id : Int
@@ -39,6 +35,9 @@ type alias Post =
     , published : Bool
     }
 
+type Msg
+    = GotPosts (Result Http.Error (List Post))
+    | Increase Int
 
 postDecoder : Decoder Post
 postDecoder =
@@ -48,22 +47,9 @@ postDecoder =
         |> required "author" string
         |> required "published" bool
 
-
-type Status
-    = Failed
-    | Loading
-    | Loaded (List Post)
-
-
-type alias Model =
-    { status : Status
-    , counter : Int
-    }
-
-
-initialModel : Model
-initialModel =
-    { status = Loading
-    , counter = 0
-    }
-
+initialCmd : Cmd Msg
+initialCmd =
+    Http.get
+        { expect = Http.expectJson GotPosts (list postDecoder)
+        , url = server
+        }
