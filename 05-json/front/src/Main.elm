@@ -9,7 +9,10 @@ import Json.Decode as Decode exposing (Decoder, int, list, string)
 import Json.Decode.Pipeline exposing (required)
 import RemoteData exposing (RemoteData, WebData)
 
+
+
 -- MAIN
+
 
 main : Program () Model Msg
 main =
@@ -20,7 +23,19 @@ main =
         , subscriptions = subscriptions
         }
 
+
+
+-- MSG
+
+
+type Msg
+    = FetchPosts
+    | PostsReceived (WebData (List Post))
+
+
+
 -- MODEL
+
 
 type alias Post =
     { id : Int
@@ -29,9 +44,11 @@ type alias Post =
     , authorUrl : String
     }
 
+
 type alias Model =
     { posts : WebData (List Post)
     }
+
 
 init : () -> ( Model, Cmd Msg )
 init _ =
@@ -41,13 +58,9 @@ init _ =
     )
 
 
--- MSG
-
-type Msg
-    = FetchPosts
-    | PostsReceived (WebData (List Post))
 
 -- UPDATE
+
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -62,6 +75,7 @@ update msg model =
             , Cmd.none
             )
 
+
 postDecoder : Decoder Post
 postDecoder =
     Decode.succeed Post
@@ -69,6 +83,7 @@ postDecoder =
         |> required "title" string
         |> required "authorName" string
         |> required "authorUrl" string
+
 
 fetchPosts : Cmd Msg
 fetchPosts =
@@ -78,6 +93,7 @@ fetchPosts =
             list postDecoder
                 |> Http.expectJson (RemoteData.fromResult >> PostsReceived)
         }
+
 
 buildErrorMessage : Http.Error -> String
 buildErrorMessage httpError =
@@ -99,13 +115,17 @@ buildErrorMessage httpError =
 
 
 
--- SUBSCRIPTIONS
+-- SUB
+
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.none
 
+
+
 -- VIEW
+
 
 view : Model -> Html Msg
 view model =
@@ -123,7 +143,7 @@ viewPostsOrError model =
 
         RemoteData.Loading ->
             h3 []
-               [ text "Loading..." ]
+                [ text "Loading..." ]
 
         RemoteData.Success posts ->
             viewPosts posts
