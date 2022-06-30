@@ -1,0 +1,19 @@
+{
+  "name": "10-elm-spa-init",
+  "version": "1.0.0",
+  "description": "> 🌳  built with [elm-spa](https://elm-spa.dev)",
+  "main": "index.js",
+  "scripts": {
+    "add": "elm-spa add",
+    "watch": "elm-spa watch",
+    "server": "elm-spa server",
+    "build": "elm-spa build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "elm": "^0.19.1-5",
+    "elm-spa": "^6.0.4"
+  }
+}
