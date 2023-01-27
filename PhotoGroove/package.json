@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-      "repl": "elm repl", 
+      "repl": "elm repl",
       "format": "elm-format . --yes",
-      "reactor": "elm reactor", 
+      "reactor": "elm reactor",
       "make" : "npm run -s make-elm1 && npm run -s make-elm2 && npm run -s make-elm3",
       "make-elm1": "elm make src/PhotoGroove1.elm --output=public/elm1.js",
       "make-elm2": "elm make src/PhotoGroove2.elm --output=public/elm2.js",
@@ -17,7 +17,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "elm": "^0.19.1-5"
   },
