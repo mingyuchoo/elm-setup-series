@@ -10,6 +10,13 @@
 
 - <https://guide.elm-lang.org/install/elm.html>
 
+### How to install CLI
+
+```bash
+npm install -g elm-format
+npm install -g elm-live
+```
+
 ### Create a project
 
 ```bash
