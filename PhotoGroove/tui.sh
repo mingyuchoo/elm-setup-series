@@ -32,7 +32,7 @@ do
             ;;
         4)
             echo "elm-live"
-            elm-live --port 4000 ./src/Main.elm
+            elm-live --port 3000 ./src/Main.elm
             ;;
         5)
             echo "elm make"
