@@ -17,7 +17,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "MIT",
+  "license": "BSD 3-Clause",
   "dependencies": {
     "elm": "^0.19.1-5"
   },
